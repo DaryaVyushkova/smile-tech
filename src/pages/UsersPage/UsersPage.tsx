@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { Button } from 'antd'
 import { User } from 'types/User'
 import {
   selectFilterText,
@@ -22,7 +23,6 @@ import {
   SortField,
 } from 'slices/user/sortSlice'
 import NoDataMessage from 'components/NoDataMessage/NoDataMessage'
-import Loader from 'components/Loader'
 import UserTable from 'pages/UsersPage/components/UserTable/UserTable'
 import TableFilters from 'pages/UsersPage/components/UserTable/components/TableFilters/TableFilters'
 import { AppDispatch, RootState } from 'app/store'
@@ -36,6 +36,7 @@ import {
 } from 'utils/userUtils'
 
 import './styles.scss'
+import { isEmpty } from 'ramda'
 
 const PER_PAGE = 10
 
@@ -115,24 +116,28 @@ const UsersPage: React.FC = () => {
     [users]
   )
 
-  useEffect(() => {
+  const handleLoadUsers = () => {
     dispatch(fetchUsers())
-  }, [dispatch])
-
-  if (isLoading) {
-    return <Loader />
   }
 
-  if (error) return <NoDataMessage message={error.toString()} />
+  useEffect(() => {
+    handleLoadUsers()
+  }, [dispatch])
 
   return (
     <div className="users-page">
-      <h1 className="users-page__title">List of users</h1>
+      <header className="users-page__header">
+        <h1 className="users-page__title">List of users</h1>
+        <Button onClick={handleLoadUsers}>Reload Users</Button>
+      </header>
+
       <TableFilters cityOptions={cityOptions} companyOptions={companyOptions} />
-      {filteredAndSortedUsers.length === 0 ? (
+      {isEmpty(filteredAndSortedUsers) && !isLoading ? (
         <NoDataMessage message="No users found" />
       ) : (
         <UserTable
+          error={error}
+          isLoading={isLoading}
           users={currentUsers}
           sortField={sortField}
           onUsersSort={handleSortUsers}

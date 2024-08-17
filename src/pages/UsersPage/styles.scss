@@ -10,6 +10,12 @@
   color: $primary-color;
   box-sizing: border-box;
 
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   &__title {
     text-transform: uppercase;
     font-size: $font-size-xlarge;
