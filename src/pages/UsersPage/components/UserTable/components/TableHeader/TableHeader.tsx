@@ -50,6 +50,4 @@ const Header: React.FC<HeaderProps> = ({ sortField, onUsersSort }) => {
   )
 }
 
-Header.displayName = 'Header'
-
 export default Header

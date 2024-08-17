@@ -25,6 +25,4 @@ const TableRow: React.FC<RowProps> = ({ user }) => {
   )
 }
 
-TableRow.displayName = 'TableRow'
-
 export default TableRow
