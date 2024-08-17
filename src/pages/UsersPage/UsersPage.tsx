@@ -117,7 +117,7 @@ const UsersPage: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchUsers())
-  }, [])
+  }, [dispatch])
 
   if (isLoading) {
     return <Loader />
