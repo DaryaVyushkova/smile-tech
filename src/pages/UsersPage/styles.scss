@@ -1,0 +1,32 @@
+@import 'styles/variables.scss';
+
+.users-page {
+  width: 100%;
+  max-width: $breakpoint-desktop;
+  margin: 0 auto;
+  padding: $spacing-large;
+  font-family: $font-family;
+  font-size: $font-size-medium;
+  color: $primary-color;
+  box-sizing: border-box;
+
+  &__title {
+    text-transform: uppercase;
+    font-size: $font-size-xlarge;
+    font-weight: $font-weight-bold;
+    padding: $spacing-large;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+  }
+
+  @include mobile {
+    padding: $spacing-medium;
+
+    h1 {
+      font-size: $font-size-large;
+    }
+  }
+}
