@@ -13,6 +13,15 @@
 - Ant Design (for UI components)
 - Axios (for API requests)
 
+## Project Structure
+
+- `src/components`: Reusable React components
+- `src/pages`: Page components
+- `src/slices`: Redux slices for state management
+- `src/types`: TypeScript types and interfaces
+- `src/utils`: Utility functions
+
+
 ## Getting Started
 
 ### Installation
