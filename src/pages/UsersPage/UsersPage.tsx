@@ -116,19 +116,21 @@ const UsersPage: React.FC = () => {
     [users]
   )
 
-  const handleLoadUsers = () => {
+  const handleLoadUsers = useCallback(() => {
     dispatch(fetchUsers())
-  }
+  }, [dispatch])
 
   useEffect(() => {
     handleLoadUsers()
-  }, [dispatch])
+  }, [])
 
   return (
     <div className="users-page">
       <header className="users-page__header">
         <h1 className="users-page__title">List of users</h1>
-        <Button onClick={handleLoadUsers}>Reload Users</Button>
+        <Button disabled={isLoading} onClick={handleLoadUsers}>
+          Reload Users
+        </Button>
       </header>
 
       <TableFilters cityOptions={cityOptions} companyOptions={companyOptions} />
