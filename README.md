@@ -11,7 +11,6 @@
 - TypeScript
 - Styled Components
 - Ant Design (for UI components)
-- Axios (for API requests)
 
 ## Project Structure
 
