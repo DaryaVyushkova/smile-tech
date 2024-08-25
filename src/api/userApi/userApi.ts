@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { User } from 'types/User'
 
 interface RandomUserName {
@@ -39,29 +40,31 @@ interface RandomUserResponse {
 
 export const userApi = {
   getUsers: async (count = 100): Promise<User[]> => {
-    const response = await fetch(`https://randomuser.me/api/?results=${count}`)
-    if (!response.ok) {
+    try {
+      const response = await axios.get<RandomUserResponse>(
+        `https://randomuser.me/api/?results=${count}`
+      )
+      return response.data.results.map((user: RandomUserResult) => ({
+        id: user.login.uuid,
+        name: `${user.name.first} ${user.name.last}`,
+        username: user.login.username,
+        email: user.email,
+        address: {
+          street: `${user.location.street.number} ${user.location.street.name}`,
+          suite: user.location.postcode,
+          city: user.location.city,
+          zipcode: user.location.postcode,
+        },
+        phone: user.phone,
+        website: user.nat,
+        company: {
+          name: user.location.timezone.description,
+          catchPhrase: user.login.salt,
+          bs: user.login.md5,
+        },
+      }))
+    } catch (error) {
       throw new Error('Failed to get users')
     }
-    const data: RandomUserResponse = await response.json()
-    return data.results.map((user: RandomUserResult) => ({
-      id: user.login.uuid,
-      name: `${user.name.first} ${user.name.last}`,
-      username: user.login.username,
-      email: user.email,
-      address: {
-        street: `${user.location.street.number} ${user.location.street.name}`,
-        suite: user.location.postcode,
-        city: user.location.city,
-        zipcode: user.location.postcode,
-      },
-      phone: user.phone,
-      website: user.nat,
-      company: {
-        name: user.location.timezone.description,
-        catchPhrase: user.login.salt,
-        bs: user.login.md5,
-      },
-    }))
   },
 }
